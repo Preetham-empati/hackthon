@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trash to Treasure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: #1a1a1a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: #0d0d0d;
+            padding: 15px 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ffffff;
+        }
+
+        header h1 {
+            font-size: 28px;
+            color: #ffffff;
+            animation: slideInLeft 1s ease;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            color: #b0bec5;
+            margin-left: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        .wallet-link {
+            display: flex;
+            align-items: center;
+            color: #b0bec5;
+            margin-left: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .wallet-link:hover {
+            color: #ffffff;
+        }
+
+        .wallet-link img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            padding: 100px 30px;
+            min-height: 100vh;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 0;
+        }
+
+        .section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .section > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Background Images */
+        #login {
+            background: url('https://img.freepik.com/free-photo/abstract-dark-blue-futuristic-digital-grid-background_53876-104051.jpg?t=st=1742300237~exp=1742303837~hmac=9d614857230c04e098a3548fddb08cd0e7b6711c2fdcfbff99786d614335f874&w=1380') no-repeat center/cover;
+        }
+
+        #signup {
+            background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center/cover;
+        }
+
+        #home {
+            background: url('https://images.microcms-assets.io/assets/1a050ff607a8466f90410e0b1991ebb5/cfc3e1b5135a419c94e371a0d73662dd/iStock-1471837160.jpg?q=75&fm=webp') no-repeat center/cover;
+        }
+
+        #profile {
+            background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center/cover;
+        }
+
+        #history {
+            background: url('https://images.unsplash.com/photo-1531685250784-7569952593d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center/cover;
+        }
+
+        #about {
+            background: url('https://images.unsplash.com/photo-1504320523143-dac796c2cadd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center/cover;
+        }
+
+        #wallet {
+            background: url('https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center/cover;
+        }
+
+        #add-item {
+            background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center/cover;
+        }
+
+        #request-item {
+            background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center/cover;
+        }
+
+        /* Forms */
+        /* Line 233 */
+/* Line 233 */
+.form-container {
+    background: #2c2c2c;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease;
+    display: flex; /* Keep flex for centering the card */
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    flex-direction: column; /* Stack children vertically */
+    text-align: center; /* Center text elements like h2 */
+}
+
+        .section.active .form-container {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            background: #3d3d3d;
+            color: #ffffff;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        input[type="file"] {
+            padding: 8px;
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff4081, #f50057);
+            color: #ffffff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
+        }
+
+        /* Home Section */
+        #home h2 {
+            font-size: 36px;
+            color: #ffffff;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.8s ease;
+        }
+
+        #home.active h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #home .slogan {
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        #home.active .slogan {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .search-bar {
+            margin: 30px auto;
+            max-width: 600px;
+            display: flex;
+            gap: 10px;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease 0.4s;
+        }
+
+        #home.active .search-bar {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .card-box {
+            background: #2c2c2c;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            width: 350px;
+            text-align: center;
+            transition: transform 0.3s ease, opacity 0.5s ease;
+            opacity: 0;
+            transform: scale(0.9);
+            cursor: pointer;
+        }
+
+        #home.active .card-box {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .card-box:nth-child(1) {
+            transition-delay: 0.6s;
+        }
+
+        .card-box:nth-child(2) {
+            transition-delay: 0.8s;
+        }
+
+        .card-box:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .card-box h3 {
+            margin-bottom: 15px;
+        }
+
+        /* Added Items and Requests Display */
+        .items-requests-container {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease 0.6s;
+        }
+
+        #home.active .items-requests-container {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .item-card, .request-card {
+            background: #2c2c2c;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .item-card:hover, .request-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-card h4, .request-card h4 {
+            color: #ff4081;
+            margin-bottom: 10px;
+        }
+
+        .item-card p, .request-card p {
+            margin: 5px 0;
+        }
+
+        /* Action Buttons */
+        .item-card .actions, .request-card .actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .item-card button, .request-card button {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        /* Edit Form Container */
+        .edit-form-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .edit-form-container.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .edit-form {
+            background: #2c2c2c;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .edit-form-container.active .edit-form {
+            transform: scale(1);
+        }
+
+        .edit-form h3 {
+            color: #ff4081;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .edit-form button {
+            margin-top: 10px;
+        }
+
+        /* Delete Confirmation */
+        .delete-confirm {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2c2c2c;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            z-index: 1001;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .delete-confirm.active {
+            display: block;
+        }
+
+        .delete-confirm button {
+            margin: 10px 5px;
+        }
+
+        /* Extra Features */
+        .extra-features {
+            margin: 40px auto;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease 1.2s;
+        }
+
+        #home.active .extra-features {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-box {
+            background: #2c2c2c;
+            padding: 20px;
+            border-radius: 12px;
+            width: 220px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-box i {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #ff4081;
+        }
+
+        /* Wallet Section */
+        #wallet h2 {
+            font-size: 36px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.8s ease;
+        }
+
+        #wallet.active h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .wallet-container {
+            background: #2c2c2c;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            margin: 30px auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease 0.4s;
+        }
+
+        #wallet.active .wallet-container {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .wallet-container p {
+            margin: 10px 0;
+            color: #b0bec5;
+        }
+
+        .wallet-container .points {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ff4081;
+        }
+
+        /* Add Item Section */
+        #add-item h2 {
+            font-size: 36px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.8s ease;
+        }
+
+        #add-item.active h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Request Item Section */
+        #request-item h2 {
+            font-size: 36px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.8s ease;
+        }
+
+        #request-item.active h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .filter-container {
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-container select {
+            width: auto;
+            min-width: 150px;
+        }
+
+        /* Profile Section */
+        #profile h2, #history h2, #about h2 {
+            font-size: 36px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.8s ease;
+        }
+
+        #profile.active h2, #history.active h2, #about.active h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #profile .info, .history-list {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease 0.4s;
+        }
+
+        #profile.active .info, #history.active .history-list {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #profile .info {
+            background: #3d3d3d;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* History Section */
+        .history-list {
+            margin-top: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .history-item {
+            background: #2c2c2c;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .history-item:hover {
+            background: #3d3d3d;
+            transform: translateX(5px);
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s ease 0.4s;
+        }
+
+        #about.active .about-content {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .about-content img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            margin: 20px 0;
+            transition: transform 0.3s ease;
+        }
+
+        .about-content img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        .card {
+            --p: 60px;
+            --h-form: auto;
+            --w-form: 380px;
+            --input-px: 0.75rem;
+            --input-py: 0.65rem;
+            --submit-h: 38px;
+            --blind-w: 64px;
+            --space-y: 0.5rem;
+            width: var(--w-form);
+            height: var(--h-form);
+            max-width: 100%;
+            border-radius: 16px;
+            background: white;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: var(--p);
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            -webkit-font-smoothing: antialiased;
+            -webkit-user-select: none;
+            user-select: none;
+            font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+        }
+
+        .avatar {
+            --sz-avatar: 166px;
+            order: 0;
+            width: var(--sz-avatar);
+            min-width: var(--sz-avatar);
+            max-width: var(--sz-avatar);
+            height: var(--sz-avatar);
+            min-height: var(--sz-avatar);
+            max-height: var(--sz-avatar);
+            border: 1px solid #707070;
+            border-radius: 9999px;
+            overflow: hidden;
+            cursor: pointer;
+            z-index: 2;
+            perspective: 80px;
+            position: relative;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            --sz-svg: calc(var(--sz-avatar) - 10px);
+        }
+
+        .avatar svg {
+            position: absolute;
+            transition: transform 0.2s ease-in, opacity 0.1s;
+            transform-origin: 50% 100%;
+            height: var(--sz-svg);
+            width: var(--sz-svg);
+            pointer-events: none;
+        }
+
+        .avatar svg#monkey {
+            z-index: 1;
+        }
+
+        .avatar svg#monkey-hands {
+            z-index: 2;
+            transform-style: preserve-3d;
+            transform: translateY(calc(var(--sz-avatar) / 1.25)) rotateX(-21deg);
+        }
+
+        .avatar::before {
+            content: "";
+            border-radius: 45%;
+            width: calc(var(--sz-svg) / 3.889);
+            height: calc(var(--sz-svg) / 5.833);
+            border: 0;
+            border-bottom: calc(var(--sz-svg) * (4 / 100)) solid #3c302a;
+            bottom: 20%;
+            position: absolute;
+            transition: all 0.2s ease;
+            z-index: 3;
+        }
+
+        .blind-check:checked ~ .avatar::before {
+            width: calc(var(--sz-svg) * (9 / 100));
+            height: 0;
+            border-radius: 50%;
+            border-bottom: calc(var(--sz-svg) * (10 / 100)) solid #3c302a;
+        }
+
+        .avatar svg#monkey .monkey-eye-r,
+        .avatar svg#monkey .monkey-eye-l {
+            animation: blink 10s 1s infinite;
+            transition: all 0.2s ease;
+        }
+
+        @keyframes blink {
+            0%, 2%, 4%, 26%, 28%, 71%, 73%, 100% {
+                ry: 4.5;
+                cy: 31.7;
+            }
+            1%, 3%, 27%, 72% {
+                ry: 0.5;
+                cy: 30;
+            }
+        }
+
+        .blind-check:checked ~ .avatar svg#monkey .monkey-eye-r,
+        .blind-check:checked ~ .avatar svg#monkey .monkey-eye-l {
+            ry: 0.5;
+            cy: 30;
+        }
+
+        .blind-check:checked ~ .avatar svg#monkey-hands {
+            transform: translate3d(0, 0, 0) rotateX(0deg);
+        }
+
+        .avatar svg#monkey,
+        .avatar::before,
+        .avatar svg#monkey .monkey-eye-nose,
+        .avatar svg#monkey .monkey-eye-r,
+        .avatar svg#monkey .monkey-eye-l {
+            transition: all 0.2s ease;
+        }
+
+        .blind-check:checked ~ .form:focus-within ~ .avatar svg#monkey,
+        .blind-check:checked ~ .form:focus-within ~ .avatar::before,
+        .blind-check:checked ~ .form:focus-within ~ .avatar svg#monkey .monkey-eye-nose,
+        .blind-check:checked ~ .form:focus-within ~ .avatar svg#monkey .monkey-eye-r,
+        .blind-check:checked ~ .form:focus-within ~ .avatar svg#monkey .monkey-eye-l {
+            animation: none;
+        }
+
+        .form:focus-within ~ .avatar svg#monkey {
+            animation: slick 3s ease infinite 1s;
+            --center: rotateY(0deg);
+            --left: rotateY(-4deg);
+            --right: rotateY(4deg);
+        }
+
+        .form:focus-within ~ .avatar::before,
+        .form:focus-within ~ .avatar svg#monkey .monkey-eye-nose,
+        .blind-check:not(:checked) ~ .form:focus-within ~ .avatar svg#monkey .monkey-eye-r,
+        .blind-check:not(:checked) ~ .form:focus-within ~ .avatar svg#monkey .monkey-eye-l {
+            ry: 3;
+            cy: 35;
+            animation: slick 3s ease infinite 1s;
+            --center: translateX(0);
+            --left: translateX(-0.5px);
+            --right: translateX(0.5px);
+        }
+
+        @keyframes slick {
+            0%, 100% {
+                transform: var(--center);
+            }
+            25% {
+                transform: var(--left);
+            }
+            75% {
+                transform: var(--right);
+            }
+        }
+
+        .card label.blind_input {
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: pointer;
+            z-index: 4;
+            position: absolute;
+            border: none;
+            right: calc(var(--p) + (var(--input-px) / 2));
+            bottom: calc(var(--p) + var(--submit-h) + var(--space-y) + (var(--input-py) / 1) + 3px);
+            padding: 4px 0;
+            width: var(--blind-w);
+            border-radius: 4px;
+            background-color: #fff;
+            color: #4d4d4d;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card label.blind_input:before {
+            content: "";
+            position: absolute;
+            left: calc((var(--input-px) / 2) * -1);
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background: #8f8f8f;
+        }
+
+        .card label.blind_input:hover {
+            color: #262626;
+            background-color: #f2f2f2;
+        }
+
+        .blind-check ~ label.blind_input span.show,
+        .blind-check:checked ~ label.blind_input span.hide {
+            display: none;
+        }
+
+        .blind-check ~ label.blind_input span.hide,
+        .blind-check:checked ~ label.blind_input span.show {
+            display: block;
+        }
+
+        .form {
+            order: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .form .title {
+            width: 100%;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            padding-top: 0;
+            padding-bottom: 1rem;
+            color: rgba(0, 0, 0, 0.7);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+        }
+
+        .form .label_input {
+            white-space: nowrap;
+            font-size: 1rem;
+            margin-top: calc(var(--space-y) / 2);
+            color: rgba(0, 0, 0, 0.9);
+            font-weight: 600;
+            display: inline;
+            text-align: left;
+            margin-right: auto;
+            position: relative;
+            z-index: 99;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .form .input {
+            resize: vertical;
+            background: white;
+            border: 1px solid #8f8f8f;
+            border-radius: 6px;
+            outline: none;
+            padding: var(--input-py) var(--input-px);
+            font-size: 18px;
+            width: 100%;
+            color: #000000b3;
+            margin: var(--space-y) 0;
+            transition: all 0.25s ease;
+        }
+
+        .form .input#password-input {
+            padding-right: calc(var(--blind-w) + var(--input-px) + 4px);
+        }
+
+        .form .input:focus {
+            border: 1px solid #0969da;
+            outline: 0;
+            box-shadow: 0 0 0 2px #0969da;
+        }
+
+        .form .frg_pss {
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .form .frg_pss a {
+            background-color: transparent;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.25s ease;
+            color: #000000b3;
+            font-weight: 500;
+            float: right;
+        }
+
+        .form .frg_pss a:hover {
+            color: #000;
+        }
+
+        .form .submit {
+            height: var(--submit-h);
+            width: 100%;
+            outline: none;
+            cursor: pointer;
+            background-color: #fff;
+            background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0.09) 0%, rgba(17, 17, 17, 0.04) 100%);
+            border: 1px solid rgba(22, 22, 22, 0.2);
+            font-weight: 500;
+            letter-spacing: 0.25px;
+            color: #000;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            -webkit-appearance: button;
+            appearance: button;
+            margin: var(--space-y) 0 0;
+        }
+
+        .form .submit:hover {
+            background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0.18) 0%, rgba(17, 17, 17, 0.08) 100%);
+            border: 1px solid rgba(22, 22, 22, 0.2);
+            color: #111;
+        }
+
+        .blind-check:checked ~ .form .input[type="text"] {
+            -webkit-text-security: disc;
+        }
+
+        .no-items {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #b0bec5;
+            font-size: 18px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Trash to Treasure</h1>
+        <nav>
+            <a href="#" onclick="showSection('login')">Login</a>
+            <a href="#" onclick="showSection('signup')">Signup</a>
+            <a href="#" onclick="showSection('home')">Home</a>
+            <a href="#" onclick="showSection('profile')">Profile</a>
+            <a href="#" onclick="showSection('history')">History</a>
+            <a href="#" onclick="showSection('about')">About</a>
+            <a href="#" class="wallet-link" onclick="showSection('wallet')">
+                <img src="https://img.icons8.com/ios-filled/50/ff4081/wallet.png" alt="Wallet Icon">
+                T2T Wallet
+            </a>
+        </nav>
+    </header>
+
+    <!-- Login Section -->
+    <div id="login" class="section active">
+        <div class="form-container">
+            <div class="card">
+                <input value="" class="blind-check" type="checkbox" id="blind-input" name="blindcheck" hidden="" />
+                <label for="blind-input" class="blind_input">
+                    <span class="hide">Hide</span>
+                    <span class="show">Show</span>
+                </label>
+                <form class="form" onsubmit="event.preventDefault(); login();">
+                    <center>
+                    <div class="title">Login</div>
+                </center>
+                    <label class="label_input" for="email-input">Email</label>
+                    <input spellcheck="false" class="input" type="email" name="email" id="email-input" />
+                    <div class="frg_pss">
+                        <label class="label_input" for="password-input">Password</label>
+                        <a href="#">Forgot password?</a>
+                    </div>
+                    <input spellcheck="false" class="input" type="text" name="password" id="password-input" />
+                    <button class="submit" type="submit">Submit</button>
+                </form>
+                <label for="blind-input" class="avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 64 64" id="monkey">
+                        <ellipse cx="53.7" cy="33" rx="8.3" ry="8.2" fill="#89664c"></ellipse>
+                        <ellipse cx="53.7" cy="33" rx="5.4" ry="5.4" fill="#ffc5d3"></ellipse>
+                        <ellipse cx="10.2" cy="33" rx="8.2" ry="8.2" fill="#89664c"></ellipse>
+                        <ellipse cx="10.2" cy="33" rx="5.4" ry="5.4" fill="#ffc5d3"></ellipse>
+                        <g fill="#89664c">
+                            <path d="m43.4 10.8c1.1-.6 1.9-.9 1.9-.9-3.2-1.1-6-1.8-8.5-2.1 1.3-1 2.1-1.3 2.1-1.3-20.4-2.9-30.1 9-30.1 19.5h46.4c-.7-7.4-4.8-12.4-11.8-15.2"></path>
+                            <path d="m55.3 27.6c0-9.7-10.4-17.6-23.3-17.6s-23.3 7.9-23.3 17.6c0 2.3.6 4.4 1.6 6.4-1 2-1.6 4.2-1.6 6.4 0 9.7 10.4 17.6 23.3 17.6s23.3-7.9 23.3-17.6c0-2.3-.6-4.4-1.6-6.4 1-2 1.6-4.2 1.6-6.4"></path>
+                        </g>
+                        <path d="m52 28.2c0-16.9-20-6.1-20-6.1s-20-10.8-20 6.1c0 4.7 2.9 9 7.5 11.7-1.3 1.7-2.1 3.6-2.1 5.7 0 6.1 6.6 11 14.7 11s14.7-4.9 14.7-11c0-2.1-.8-4-2.1-5.7 4.4-2.7 7.3-7 7.3-11.7" fill="#e0ac7e"></path>
+                        <g fill="#3b302a" class="monkey-eye-nose">
+                            <path d="m35.1 38.7c0 1.1-.4 2.1-1 2.1-.6 0-1-.9-1-2.1 0-1.1.4-2.1 1-2.1.6.1 1 1 1 2.1"></path>
+                            <path d="m30.9 38.7c0 1.1-.4 2.1-1 2.1-.6 0-1-.9-1-2.1 0-1.1.4-2.1 1-2.1.5.1 1 1 1 2.1"></path>
+                            <ellipse cx="40.7" cy="31.7" rx="3.5" ry="4.5" class="monkey-eye-r"></ellipse>
+                            <ellipse cx="23.3" cy="31.7" rx="3.5" ry="4.5" class="monkey-eye-l"></ellipse>
+                        </g>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 64 64" id="monkey-hands">
+                        <path fill="#89664C" d="M9.4,32.5L2.1,61.9H14c-1.6-7.7,4-21,4-21L9.4,32.5z"></path>
+                        <path fill="#FFD6BB" d="M15.8,24.8c0,0,4.9-4.5,9.5-3.9c2.3,0.3-7.1,7.6-7.1,7.6s9.7-8.2,11.7-5.6c1.8,2.3-8.9,9.8-8.9,9.8s10-8.1,9.6-4.6c-0.3,3.8-7.9,12.8-12.5,13.8C11.5,43.2,6.3,39,9.8,24.4C11.6,17,13.3,25.2,15.8,24.8"></path>
+                        <path fill="#89664C" d="M54.8,32.5l7.3,29.4H50.2c1.6-7.7-4-21-4-21L54.8,32.5z"></path>
+                        <path fill="#FFD6BB" d="M48.4,24.8c0,0-4.9-4.5-9.5-3.9c-2.3,0.3,7.1,7.6,7.1,7.6s-9.7-8.2-11.7-5.6c-1.8,2.3,8.9,9.8,8.9,9.8s-10-8.1-9.7-4.6c0.4,3.8,8,12.8,12.6,13.8c6.6,1.3,11.8-2.9,8.3-17.5C52.6,17,50.9,25.2,48.4,24.8"></path>
+                    </svg>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Section -->
+    <div id="signup" class="section">
+        <div class="form-container">
+            <h2>Signup</h2>
+            <input type="text" placeholder="Username" id="signupUsername">
+            <input type="email" placeholder="Email" id="signupEmail">
+            <input type="password" placeholder="Password" id="signupPassword">
+            <button onclick="signup()">Signup</button>
+        </div>
+    </div>
+
+    <!-- Home Section -->
+    <div id="home" class="section">
+        <h2>Swap Your Way to Sustainability</h2>
+        <div class="slogan">Reduce, Reuse, Recycle</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for items..." id="searchInput">
+            <button onclick="searchItems()">Search</button>
+        </div>
+        <div class="card-container">
+            <div class="card-box" onclick="showSection('add-item')">
+                <h3>Add Item</h3>
+                <p>List an item you want to swap.</p>
+            </div>
+            <div class="card-box" onclick="showSection('request-item')">
+                <h3>Request Item</h3>
+                <p>Search for an item you need.</p>
+            </div>
+        </div>
+
+        <div class="items-requests-container" id="itemsRequestsContainer">
+            <h3>Your Added Items</h3>
+            <div id="addedItemsList"></div>
+            <h3>Your Requests</h3>
+            <div id="requestsList"></div>
+        </div>
+
+        <div class="extra-features">
+            <div class="feature-box">
+                <i class="fas fa-leaf"></i>
+                <h3>Eco Impact</h3>
+                <p>Track your waste reduction.</p>
+                <button onclick="alert('Feature coming soon!')">View Stats</button>
+            </div>
+            <div class="feature-box">
+                <i class="fas fa-star"></i>
+                <h3>Ratings</h3>
+                <p>Rate your swap partners.</p>
+                <button onclick="alert('Feature coming soon!')">Rate Now</button>
+            </div>
+            <div class="feature-box">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Location Swap</h3>
+                <p>Find nearby swappers.</p>
+                <button onclick="alert('Feature coming soon!')">Locate</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Section -->
+    <div id="add-item" class="section">
+        <h2>Add New Item</h2>
+        <div class="form-container" style="max-width: 600px;">
+            <input type="text" placeholder="Item Name" id="itemName">
+            <input type="date" placeholder="Purchased Date" id="purchasedDate">
+            <select id="itemCondition">
+                <option value="" disabled selected>Condition</option>
+                <option value="new">New</option>
+                <option value="used">Used</option>
+                <option value="slightly-used">Slightly Used</option>
+            </select>
+            <textarea placeholder="Description" id="itemDescription"></textarea>
+            <textarea placeholder="Any Defects" id="itemDefects"></textarea>
+            <input type="text" placeholder="Category" id="itemCategory">
+            <input type="text" placeholder="Brand" id="itemBrand">
+            <input type="number" placeholder="Original Price" id="itemPrice" min="0">
+            <input type="file" accept="image/*" id="itemImage">
+            <button onclick="addItem()">Add Item</button>
+            <button onclick="showSection('home')" style="background: #3d3d3d;">Back to Home</button>
+        </div>
+        <div class="edit-form-container" id="editItemFormContainer">
+            <div class="edit-form">
+                <h3>Edit Item</h3>
+                <input type="text" placeholder="Item Name" id="editItemName">
+                <input type="date" placeholder="Purchased Date" id="editPurchasedDate">
+                <select id="editItemCondition">
+                    <option value="" disabled selected>Condition</option>
+                    <option value="new">New</option>
+                    <option value="used">Used</option>
+                    <option value="slightly-used">Slightly Used</option>
+                </select>
+                <textarea placeholder="Description" id="editItemDescription"></textarea>
+                <textarea placeholder="Any Defects" id="editItemDefects"></textarea>
+                <input type="text" placeholder="Category" id="editItemCategory">
+                <input type="text" placeholder="Brand" id="editItemBrand">
+                <input type="number" placeholder="Original Price" id="editItemPrice" min="0">
+                <input type="file" accept="image/*" id="editItemImage">
+                <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+                    <button onclick="saveEditedItem()">Save Changes</button>
+                    <button onclick="cancelEdit()" style="background: #3d3d3d;">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Item Section -->
+    <div id="request-item" class="section">
+        <h2>Request an Item</h2>
+        <div class="form-container">
+            <input type="text" placeholder="Item Name" id="requestItemName">
+            <textarea placeholder="Description of Desired Item" id="requestItemDescription"></textarea>
+            <div class="filter-container">
+                <select id="requestCategory">
+                    <option value="" disabled selected>Category</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="furniture">Furniture</option>
+                    <option value="books">Books</option>
+                    <option value="other">Other</option>
+                </select>
+                <select id="requestCondition">
+                    <option value="" disabled selected>Condition</option>
+                    <option value="new">New</option>
+                    <option value="used">Used</option>
+                    <option value="slightly-used">Slightly Used</option>
+                </select>
+                <input type="number" placeholder="Min Price" id="requestMinPrice" min="0">
+                <input type="number" placeholder="Max Price" id="requestMaxPrice" min="0">
+            </div>
+            <button onclick="submitRequest()">Submit Request</button>
+            <button onclick="showSection('home')" style="background: #3d3d3d;">Back to Home</button>
+        </div>
+        <div class="edit-form-container" id="editRequestFormContainer">
+            <div class="edit-form">
+                <h3>Edit Request</h3>
+                <input type="text" placeholder="Item Name" id="editRequestName">
+                <textarea placeholder="Description of Desired Item" id="editRequestDescription"></textarea>
+                <select id="editRequestCategory">
+                    <option value="" disabled selected>Category</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="furniture">Furniture</option>
+                    <option value="books">Books</option>
+                    <option value="other">Other</option>
+                </select>
+                <select id="editRequestCondition">
+                    <option value="" disabled selected>Condition</option>
+                    <option value="new">New</option>
+                    <option value="used">Used</option>
+                    <option value="slightly-used">Slightly Used</option>
+                </select>
+                <input type="number" placeholder="Min Price" id="editRequestMinPrice" min="0">
+                <input type="number" placeholder="Max Price" id="editRequestMaxPrice" min="0">
+                <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+                    <button onclick="saveEditedRequest()">Save Changes</button>
+                    <button onclick="cancelEdit()" style="background: #3d3d3d;">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Section -->
+    <div id="profile" class="section">
+        <h2>Your Profile</h2>
+        <div class="form-container">
+            <input type="text" placeholder="Full Name" id="profileName" value="John Doe">
+            <input type="email" placeholder="Email" id="profileEmail" value="john.doe@example.com">
+            <button onclick="updateProfile()">Update Profile</button>
+        </div>
+        <div class="info">
+            <p><strong>Swaps Completed:</strong> <span id="swapsCompleted">0</span></p>
+            <p><strong>Items Listed:</strong> <span id="itemsListed">0</span></p>
+            <p><strong>Account Type:</strong> <span id="accountType">Basic</span></p>
+            <p><strong>Item Limit:</strong> <span id="itemLimit">5</span></p>
+        </div>
+    </div>
+
+    <!-- Swap History Section -->
+    <div id="history" class="section">
+        <h2>Swap History</h2>
+        <div class="history-list" id="historyList"></div>
+    </div>
+
+    <!-- About Section -->
+    <div id="about" class="section">
+        <div class="about-content">
+            <h2>About Us</h2>
+            <p>Trash to Treasure is a platform designed to promote sustainability by connecting individuals to swap their unused items. Inspired by the barter system, we aim to reduce waste, encourage reusability, and foster a community of eco-conscious users.</p>
+            <img src="https://images.unsplash.com/photo-1583573636246-18b214361ff4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Old Books">
+            <p>Our mission is to combat pollution and overconsumption by offering a user-friendly, C-to-C (consumer-to-consumer) swapping network. Unlike traditional marketplaces like eBay or OLX, we focus solely on swapping—no money changes hands, just goods.</p>
+            <img src="https://images.unsplash.com/photo-1561414927-6d86591d0c4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Recycled Materials">
+            <p>With features like real-time chat and location-based swapping, we make it easy to trade locally and sustainably. Join us in turning trash into treasure!</p>
+        </div>
+    </div>
+
+    <!-- Wallet Section -->
+    <div id="wallet" class="section">
+        <h2>T2T Wallet</h2>
+        <div class="wallet-container">
+            <p class="points">Points: <span id="walletPoints">0</span></p>
+            <p>Earn 10 points per login and 100 points per completed swap!</p>
+            <p>Upgrade to Premium (300 points) to increase your item limit from 5 to 15.</p>
+            <button onclick="upgradeAccount()">Upgrade to Premium (300 Points)</button>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="delete-confirm" id="deleteConfirm">
+        <h3>Confirm Deletion</h3>
+        <p>Are you sure you want to delete this item/request?</p>
+        <button onclick="confirmDelete()">Yes</button>
+        <button onclick="cancelDelete()" style="background: #3d3d3d;">No</button>
+    </div>
+
+    <!-- Font Awesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        let points = 0;
+        let loginCount = 0;
+        let swapsCompleted = 0;
+        let itemsListed = 0;
+        let itemLimit = 5;
+        let isPremium = false;
+        let addedItems = JSON.parse(localStorage.getItem('addedItems')) || [];
+        let requests = JSON.parse(localStorage.getItem('requests')) || [];
+        let currentEditIndex = null;
+        let isEditingItem = true;
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            const targetSection = document.getElementById(sectionId);
+            targetSection.classList.add('active');
+            updateProfileDisplay();
+            updateWalletDisplay();
+            if (sectionId === 'home') {
+                displayItemsAndRequests();
+            }
+            hideEditForm();
+            hideDeleteConfirm();
+        }
+
+        function login() {
+            const username = document.getElementById('email-input').value;
+            const password = document.getElementById('password-input').value;
+            if (username && password) {
+                loginCount++;
+                points += 10;
+                alert(`Logged in successfully! You earned 10 points. Total logins: ${loginCount}`);
+                showSection('home');
+                saveToLocalStorage();
+                updateWalletDisplay();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+
+        function signup() {
+            const username = document.getElementById('signupUsername').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            if (username && email && password) {
+                alert('Signed up successfully! Please login.');
+                showSection('login');
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+
+        function addItem() {
+            const itemName = document.getElementById('itemName').value;
+            const purchasedDate = document.getElementById('purchasedDate').value;
+            const itemCondition = document.getElementById('itemCondition').value;
+            const itemDescription = document.getElementById('itemDescription').value;
+            const itemDefects = document.getElementById('itemDefects').value;
+            const itemCategory = document.getElementById('itemCategory').value;
+            const itemBrand = document.getElementById('itemBrand').value;
+            const itemPrice = document.getElementById('itemPrice').value;
+            const itemImage = document.getElementById('itemImage').files[0];
+
+            if (itemsListed >= itemLimit) {
+                alert(`You've reached your item limit of ${itemLimit}. Upgrade to Premium to add more items!`);
+                return;
+            }
+
+            if (itemName && purchasedDate && itemCondition && itemDescription && itemCategory && itemBrand && itemPrice) {
+                itemsListed++;
+                const imageName = itemImage ? itemImage.name : 'No image uploaded';
+                addedItems.push({
+                    name: itemName,
+                    purchasedDate: purchasedDate,
+                    condition: itemCondition,
+                    description: itemDescription,
+                    defects: itemDefects || 'None',
+                    category: itemCategory,
+                    brand: itemBrand,
+                    price: itemPrice,
+                    image: imageName
+                });
+                alert(`Item added successfully!`);
+                updateProfileDisplay();
+                showSection('home');
+                clearAddItemFields();
+                saveToLocalStorage();
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        }
+
+        function submitRequest() {
+            const itemName = document.getElementById('requestItemName').value;
+            const itemDescription = document.getElementById('requestItemDescription').value;
+            const category = document.getElementById('requestCategory').value;
+            const condition = document.getElementById('requestCondition').value;
+            const minPrice = document.getElementById('requestMinPrice').value;
+            const maxPrice = document.getElementById('requestMaxPrice').value;
+
+            if (itemName && itemDescription && category && condition && minPrice && maxPrice) {
+                requests.push({
+                    name: itemName,
+                    description: itemDescription,
+                    category: category,
+                    condition: condition,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice
+                });
+                alert(`Request submitted successfully!`);
+                showSection('home');
+                clearRequestFields();
+                saveToLocalStorage();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+
+        function displayItemsAndRequests() {
+            const addedItemsList = document.getElementById('addedItemsList');
+            const requestsList = document.getElementById('requestsList');
+            addedItemsList.innerHTML = '';
+            requestsList.innerHTML = '';
+
+            if (addedItems.length === 0) {
+                addedItemsList.innerHTML = '<p class="no-items">No items added yet.</p>';
+            } else {
+                addedItems.forEach((item, index) => {
+                    addedItemsList.innerHTML += `
+                        <div class="item-card">
+                            <h4>${item.name}</h4>
+                            <p><strong>Purchased:</strong> ${item.purchasedDate}</p>
+                            <p><strong>Condition:</strong> ${item.condition}</p>
+                            <p><strong>Description:</strong> ${item.description}</p>
+                            <p><strong>Defects:</strong> ${item.defects}</p>
+                            <p><strong>Category:</strong> ${item.category}</p>
+                            <p><strong>Brand:</strong> ${item.brand}</p>
+                            <p><strong>Price:</strong> $${item.price}</p>
+                            <p><strong>Image:</strong> ${item.image}</p>
+                            <div class="actions">
+                                <button onclick="editItem(${index})">Edit</button>
+                                <button onclick="confirmDeleteItem(${index})">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            if (requests.length === 0) {
+                requestsList.innerHTML = '<p class="no-items">No requests submitted yet.</p>';
+            } else {
+                requests.forEach((request, index) => {
+                    requestsList.innerHTML += `
+                        <div class="request-card">
+                            <h4>${request.name}</h4>
+                            <p><strong>Description:</strong> ${request.description}</p>
+                            <p><strong>Category:</strong> ${request.category}</p>
+                            <p><strong>Condition:</strong> ${request.condition}</p>
+                            <p><strong>Price Range:</strong> $${request.minPrice} - $${request.maxPrice}</p>
+                            <div class="actions">
+                                <button onclick="editRequest(${index})">Edit</button>
+                                <button onclick="confirmDeleteRequest(${index})">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function editItem(index) {
+            currentEditIndex = index;
+            isEditingItem = true;
+            const item = addedItems[index];
+            document.getElementById('editItemName').value = item.name;
+            document.getElementById('editPurchasedDate').value = item.purchasedDate;
+            document.getElementById('editItemCondition').value = item.condition;
+            document.getElementById('editItemDescription').value = item.description;
+            document.getElementById('editItemDefects').value = item.defects;
+            document.getElementById('editItemCategory').value = item.category;
+            document.getElementById('editItemBrand').value = item.brand;
+            document.getElementById('editItemPrice').value = item.price;
+            document.getElementById('editItemImage').value = ''; // File input cannot be pre-filled
+            showEditForm('editItemFormContainer');
+        }
+
+        function editRequest(index) {
+            currentEditIndex = index;
+            isEditingItem = false;
+            const request = requests[index];
+            document.getElementById('editRequestName').value = request.name;
+            document.getElementById('editRequestDescription').value = request.description;
+            document.getElementById('editRequestCategory').value = request.category;
+            document.getElementById('editRequestCondition').value = request.condition;
+            document.getElementById('editRequestMinPrice').value = request.minPrice;
+            document.getElementById('editRequestMaxPrice').value = request.maxPrice;
+            showEditForm('editRequestFormContainer');
+        }
+
+        function showEditForm(containerId) {
+            document.querySelectorAll('.edit-form-container').forEach(container => container.classList.remove('active'));
+            document.getElementById(containerId).classList.add('active');
+        }
+
+        function hideEditForm() {
+            document.querySelectorAll('.edit-form-container').forEach(container => container.classList.remove('active'));
+        }
+
+        function saveEditedItem() {
+            const itemName = document.getElementById('editItemName').value;
+            const purchasedDate = document.getElementById('editPurchasedDate').value;
+            const itemCondition = document.getElementById('editItemCondition').value;
+            const itemDescription = document.getElementById('editItemDescription').value;
+            const itemDefects = document.getElementById('editItemDefects').value;
+            const itemCategory = document.getElementById('editItemCategory').value;
+            const itemBrand = document.getElementById('editItemBrand').value;
+            const itemPrice = document.getElementById('editItemPrice').value;
+            const itemImage = document.getElementById('editItemImage').files[0];
+
+            if (itemName && purchasedDate && itemCondition && itemDescription && itemCategory && itemBrand && itemPrice) {
+                const imageName = itemImage ? itemImage.name : addedItems[currentEditIndex].image;
+                addedItems[currentEditIndex] = {
+                    name: itemName,
+                    purchasedDate: purchasedDate,
+                    condition: itemCondition,
+                    description: itemDescription,
+                    defects: itemDefects || 'None',
+                    category: itemCategory,
+                    brand: itemBrand,
+                    price: itemPrice,
+                    image: imageName
+                };
+                alert('Item updated successfully!');
+                hideEditForm();
+                showSection('home');
+                saveToLocalStorage();
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        }
+
+        function saveEditedRequest() {
+            const itemName = document.getElementById('editRequestName').value;
+            const itemDescription = document.getElementById('editRequestDescription').value;
+            const category = document.getElementById('editRequestCategory').value;
+            const condition = document.getElementById('editRequestCondition').value;
+            const minPrice = document.getElementById('editRequestMinPrice').value;
+            const maxPrice = document.getElementById('editRequestMaxPrice').value;
+
+            if (itemName && itemDescription && category && condition && minPrice && maxPrice) {
+                requests[currentEditIndex] = {
+                    name: itemName,
+                    description: itemDescription,
+                    category: category,
+                    condition: condition,
+                    minPrice: minPrice,
+                    maxPrice: maxPrice
+                };
+                alert('Request updated successfully!');
+                hideEditForm();
+                showSection('home');
+                saveToLocalStorage();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+
+        function cancelEdit() {
+            hideEditForm();
+        }
+
+        function confirmDeleteItem(index) {
+            currentEditIndex = index;
+            isEditingItem = true;
+            showDeleteConfirm();
+        }
+
+        function confirmDeleteRequest(index) {
+            currentEditIndex = index;
+            isEditingItem = false;
+            showDeleteConfirm();
+        }
+
+        function showDeleteConfirm() {
+            document.getElementById('deleteConfirm').classList.add('active');
+        }
+
+        function hideDeleteConfirm() {
+            document.getElementById('deleteConfirm').classList.remove('active');
+        }
+
+        function confirmDelete() {
+            if (isEditingItem) {
+                itemsListed--;
+                addedItems.splice(currentEditIndex, 1);
+                alert('Item deleted successfully!');
+            } else {
+                requests.splice(currentEditIndex, 1);
+                alert('Request deleted successfully!');
+            }
+            hideDeleteConfirm();
+            showSection('home');
+            updateProfileDisplay();
+            saveToLocalStorage();
+        }
+
+        function cancelDelete() {
+            hideDeleteConfirm();
+        }
+
+        function updateHistory(yourItem, desiredItem) {
+            const historyList = document.getElementById('historyList');
+            const date = new Date().toLocaleDateString();
+            historyList.innerHTML += `
+                <div class="history-item">
+                    <p><strong>Swapped:</strong> ${yourItem} for ${desiredItem}</p>
+                    <p><strong>Date:</strong> ${date}</p>
+                </div>
+            `;
+        }
+
+        function searchItems() {
+            const query = document.getElementById('searchInput').value;
+            if (query) {
+                alert(`Searching for: ${query}`);
+            } else {
+                alert('Please enter a search term.');
+            }
+        }
+
+        function updateProfile() {
+            const name = document.getElementById('profileName').value;
+            const email = document.getElementById('profileEmail').value;
+            if (name && email) {
+                alert('Profile updated successfully!');
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+
+        function updateProfileDisplay() {
+            document.getElementById('swapsCompleted').textContent = swapsCompleted;
+            document.getElementById('itemsListed').textContent = itemsListed;
+            document.getElementById('accountType').textContent = isPremium ? 'Premium' : 'Basic';
+            document.getElementById('itemLimit').textContent = itemLimit;
+        }
+
+        function updateWalletDisplay() {
+            document.getElementById('walletPoints').textContent = points;
+        }
+
+        function upgradeAccount() {
+            if (isPremium) {
+                alert('You already have a Premium account!');
+                return;
+            }
+            if (points >= 300) {
+                points -= 300;
+                isPremium = true;
+                itemLimit = 15;
+                alert('Account upgraded to Premium! Your item limit is now 15.');
+                updateProfileDisplay();
+                updateWalletDisplay();
+            } else {
+                alert(`Not enough points! You need 300 points, but you have ${points}.`);
+            }
+        }
+
+        function clearAddItemFields() {
+            document.getElementById('itemName').value = '';
+            document.getElementById('purchasedDate').value = '';
+            document.getElementById('itemCondition').value = '';
+            document.getElementById('itemDescription').value = '';
+            document.getElementById('itemDefects').value = '';
+            document.getElementById('itemCategory').value = '';
+            document.getElementById('itemBrand').value = '';
+            document.getElementById('itemPrice').value = '';
+            document.getElementById('itemImage').value = '';
+        }
+
+        function clearRequestFields() {
+            document.getElementById('requestItemName').value = '';
+            document.getElementById('requestItemDescription').value = '';
+            document.getElementById('requestCategory').value = '';
+            document.getElementById('requestCondition').value = '';
+            document.getElementById('requestMinPrice').value = '';
+            document.getElementById('requestMaxPrice').value = '';
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('addedItems', JSON.stringify(addedItems));
+            localStorage.setItem('requests', JSON.stringify(requests));
+        }
+
+        // Load initial data and display
+        window.onload = function() {
+            itemsListed = addedItems.length;
+            displayItemsAndRequests();
+            updateProfileDisplay();
+            updateWalletDisplay();
+        };
+    </script>
+	<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="dFw4AqxfTwNVk5h5e60Sj";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
+</body>
+</html>
